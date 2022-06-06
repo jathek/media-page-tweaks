@@ -1,0 +1,47 @@
+/* ==UserStyle==
+@name           MPT - Modify
+@namespace      127.0.0.1
+@version        2022.5.28
+@description    Apply filter and transform to media
+@author         nearcatch
+@preprocessor	uso
+@var range		fBlur           "Filter: Blur"          [0, 0, 20, 1, 'px']
+@var range		fBrightness	    "Filter: Brightness"    [100, 0, 200, 5, '%']
+@var range		fContrast       "Filter: Contrast"      [100, 0, 200, 5, '%']
+@var text		fDropShadow     "Filter: Drop shadow"   "0px 0px 0px black"
+@var range		fGrayscale      "Filter: Grayscale"     [0, 0, 100, 5, '%']
+@var range		fHueRotate      "Filter: Hue rotation"  [0, 0, 360, 5, 'deg']
+@var range		fInvert	        "Filter: Inversion"     [0, 0, 100, 5, '%']
+@var range		fOpacity        "Filter: Opacity"       [100, 0, 100, 5, '%']
+@var range		fSaturation     "Filter: Saturation"    [100, 0, 200, 5, '%']
+@var range		fSepia	        "Filter: Sepia"         [0, 0, 100, 5, '%']
+@var select     tRotateY        "Transform: Mirror"     ["0deg:no","180deg:yes"]
+@var select		tRotate	"Transform: Rotation" {
+	"1:none": "0deg",
+	"2:CW": "90deg",
+	"3:CCW": "-90deg",
+	"4:180": "180deg"
+}
+@var text		gImg			"Image extensions"      ".*(gif|ico|jfif|jpe?g|png|svg|webp|GIF|ICO|JFIF|JPE?G|PNG|SVG|WEBP).*"
+@var text		gVid			"Video extensions"      ".*\\.(m4v|mov|mp4|webm|M4V|MOV|MP4|WEBM)$"
+@var text		gAdd			"Additional regex"      ""
+==/UserStyle== */
+@-moz-document regexp('/*[[gImg]]*/'),
+regexp('/*[[gVid]]*/'),
+regexp('/*[[gAdd]]*/') {
+    BODY > video:only-child,
+    BODY > IMG:first-child:only-of-type {
+        filter:
+            blur(/*[[fBlur]]*/)
+            brightness(/*[[fBrightness]]*/)
+            contrast(/*[[fContrast]]*/)
+            drop-shadow(/*[[fDropShadow]]*/)
+            grayscale(/*[[fGrayscale]]*/)
+            hue-rotate(/*[[fHueRotate]]*/)
+            invert(/*[[fInvert]]*/)
+            opacity(/*[[fOpacity]]*/)
+            saturate(/*[[fSaturation]]*/)
+            sepia(/*[[fSepia]]*/);
+        transform: rotate(/*[[tRotate]]*/) rotateY(/*[[tRotateY]]*/);
+    }
+}

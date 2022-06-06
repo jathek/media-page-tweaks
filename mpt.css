@@ -1,0 +1,66 @@
+/* ==UserStyle==
+@name           MPT
+@namespace      127.0.0.1
+@version        2022.5.28
+@description    Solo image tweaks
+@author         nearcatch
+==/UserStyle== */
+
+/*@-moz-document regexp('.*(gif|ico|jfif|jpe?g|png|svg|webp|GIF|ICO|JFIF|JPE?G|PNG|SVG|WEBP).*') {*/
+  :root {
+    /* padding on each side of image */
+    --mpti-pad: 8px;
+    /* checkerboard tile color (upper left) */
+    --cb: #666;
+    /* checkerboard tile color (lower right) */
+    --cb-alt: #0000;
+    /* checkerboard background */
+    --cb-bg: rgba(99, 99, 99, .1);
+    /* checkerboard border*/
+    --cb-border: rgba(99, 99, 99, .75);
+    /* imitation box-shadow */
+    --img-box-size: 5px;
+    --img-box-corner: 3px;
+    --img-box-color: rgba(0,0,0,30%);
+    --img-box:
+        linear-gradient(0deg, var(--img-box-color), #0000) var(--mpti-pad) calc(var(--mpti-pad) - var(--img-box-size))/calc(100% - var(--mpti-pad) * 2) var(--img-box-size) no-repeat border-box,
+        linear-gradient(90deg, var(--img-box-color), #0000) calc(100% - var(--mpti-pad) + var(--img-box-size)) var(--mpti-pad)/var(--img-box-size) calc(100% - var(--mpti-pad) * 2) no-repeat border-box,
+        linear-gradient(180deg, var(--img-box-color), #0000) var(--mpti-pad) calc(100% - var(--mpti-pad) + var(--img-box-size))/calc(100% - var(--mpti-pad) * 2) var(--img-box-size) no-repeat border-box,
+        linear-gradient(270deg, var(--img-box-color), #0000) calc(var(--mpti-pad) - var(--img-box-size)) var(--mpti-pad)/var(--img-box-size) calc(100% - var(--mpti-pad) * 2) no-repeat border-box,
+        /* imitation box-shadow corners */
+        linear-gradient(315deg, var(--img-box-color), #0000) calc(var(--mpti-pad) - var(--img-box-corner)) calc(var(--mpti-pad) - var(--img-box-corner))/var(--img-box-corner) var(--img-box-corner) no-repeat border-box,
+        linear-gradient(45deg, var(--img-box-color), #0000) calc(100% - var(--mpti-pad) + var(--img-box-corner)) calc(var(--mpti-pad) - var(--img-box-corner))/var(--img-box-corner) var(--img-box-corner) no-repeat border-box,
+        linear-gradient(135deg, var(--img-box-color), #0000) calc(100% - var(--mpti-pad) + var(--img-box-corner)) calc(100% - var(--mpti-pad) + var(--img-box-corner))/var(--img-box-corner) var(--img-box-corner) no-repeat border-box,
+        linear-gradient(215deg, var(--img-box-color), #0000) calc(var(--mpti-pad) - var(--img-box-corner)) calc(100% - var(--mpti-pad) + var(--img-box-corner))/var(--img-box-corner) var(--img-box-corner) no-repeat border-box;
+}
+/* Pad image and center at top */
+BODY > IMG:first-child:only-of-type {
+    /*display: inline-block;
+    position: relative;
+    left: 50vw;
+    transform: translateX(-50%);
+    margin: var(--mpti-pad) auto;
+    box-shadow: 0 0 5px rgba(0,0,0,0.6);*/
+    display: block;
+    position: static;
+    border: var(--mpti-pad) solid #0000;
+    height: auto !important;
+    width: auto !important;
+    background: var(--img-box);
+    background-color: #0000;
+}
+BODY > IMG:first-child:only-of-type:not(.overflowingVertical) {
+    max-height: calc(100vh - var(--mpti-pad) * 2);
+    max-width: calc(100vw - var(--mpti-pad) * 2);
+}
+/* Add checkerboard on hover */
+BODY > IMG:first-child:only-of-type:hover {
+    background:
+        var(--img-box),
+        /* imitation outline */
+        linear-gradient(var(--cb-border) 1px, #0000 1px calc(100% - 1px), var(--cb-border) calc(100% - 1px)) 0px 0px/100% content-box,
+        linear-gradient(90deg, var(--cb-border) 1px, #0000 1px calc(100% - 1px), var(--cb-border) calc(100% - 1px)) 0px 0px/100% content-box,
+        /* checkerboard */
+        linear-gradient(135deg, var(--cb) 25%, var(--cb-alt) 25% 75%, var(--cb) 75%) 0px 0px/8px 8px content-box,
+        var(--cb-bg) linear-gradient(135deg, var(--cb) 25%, var(--cb-alt) 25% 75%, var(--cb) 75%) 4px 4px/8px 8px content-box;
+}
